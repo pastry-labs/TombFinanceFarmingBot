@@ -16,7 +16,7 @@ Use the package manager [npm](https://www.npmjs.com/get-npm) to install this bot
 
 ## Usage
 
-Modify the [config.json](../blob/main/config.json) with your wallet address and private key.
+Modify the [config.json](../main/config.json) with your wallet address and private key.
 Optionally, change the harvestThreshold based on how often you want to dump rewards.
 slipTolerance is set to 3.0% and may need to be changed depending on TOMB's peg
 ```json
@@ -39,4 +39,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 
-[MIT LICENSE](../blob/main/LICENSE)
+[MIT LICENSE](../main/LICENSE)
