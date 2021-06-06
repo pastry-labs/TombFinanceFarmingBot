@@ -1,0 +1,13 @@
+{
+	"networkId": 250,
+	"networkRPC": "https://rpcapi.fantom.network",
+	"networkName": "fantom",
+	"oracleContractAddress": "0x55530fA1B042582D5FA3C313a7e02d21Af6B82f4",
+	"tombRewardPoolAddress": "0xa7b9123f4b15fE0fF01F469ff5Eab2b41296dC0E",
+	"spookyRouterAddress": "0xf491e7b69e4244ad4002bc14e878a34207e38c29",
+	"tombTokenAddress": "0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
+	"privateKey": "",
+	"userAddress": "",
+	"harvestThreshold": 0.125,
+	"slipTolerance": "300"
+}
