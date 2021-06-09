@@ -29,7 +29,8 @@ const coinPriceUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${networ
 var localProvider = new providers.JsonRpcProvider(networkRPC);
 var request = require("request-promise");
 var Promise = require("bluebird");
-var lastFTMPrice = 0;
+var lastCoinPrice = 0;
+var coinName = "fantom";
 
 function getSpookySwapOutputPrice( amountIn, path ) {
 	const spookyRouterContract = new web3.eth.Contract(
@@ -62,7 +63,7 @@ function refreshStatus() {
 			return TombRewardPoolContract.methods.pendingTOMB(0, user_address).call()
 				.then( pendingTomb => {
 					return oracleContract.methods.twap(TombTokenAddress, '1000000000000000000').call()
-						.then((priceInFTM) => {
+						.then((priceInCoin) => {
 							var pendingTombParsed = parseFloat( pendingTomb / 1e18 ).toFixed(4);
 							pendingTombParsed = parseFloat(pendingTombParsed)
 							
@@ -70,9 +71,9 @@ function refreshStatus() {
 								console.log("[Harvester] Harvesting pool 0...")
 								return harvestTombPoolZero()
 							} else {
-								var priceInUSD = parseFloat( priceInFTM / 1e18 ).toFixed(2);
-								lastFTMPrice = parseFloat( priceData.fantom.usd )
-								priceInUSD = parseFloat( priceInUSD ) * lastFTMPrice
+								var priceInUSD = parseFloat( priceInCoin / 1e18 ).toFixed(2);
+								lastCoinPrice = parseFloat( priceData[coinName].usd )
+								priceInUSD = parseFloat( priceInUSD ) * lastCoinPrice
 								console.log(`${new Date()} | ${pendingTombParsed} TOMB claimable (threshold = ${harvestThreshold})`)
 							}
 						})
@@ -126,7 +127,7 @@ function createSpookySwapTrade( amountIn ) {
 					spookySwapTransaction.amountOutMin = trade.minimumAmountOut(slippageTolerance).raw.toString()
 					
 					var priceInUSD = parseFloat( spookySwapTransaction.amountOutMin / 1e18 ).toFixed(2);
-					priceInUSD = parseFloat( lastFTMPrice ) * priceInUSD;
+					priceInUSD = parseFloat( lastCoinPrice ) * priceInUSD;
 					
 					console.log(`[Trader] ${BigNumber(spookySwapTransaction.amountIn).dividedBy(1e18)} TOMB for ${BigNumber(spookySwapTransaction.amountOutMin).dividedBy(1e18)} FTM ($${ priceInUSD })`)
 					
